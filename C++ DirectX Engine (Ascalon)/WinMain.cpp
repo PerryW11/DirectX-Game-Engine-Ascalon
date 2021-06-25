@@ -1,16 +1,51 @@
-#include <Windows.h>
+#pragma once
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch (msg)
-	{
-	case WM_CLOSE:
-		PostQuitMessage(66);
-		break;
-	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
+// target Windows 7 or later
+#define _WIN32_WINNT 0x0601
 
+#include <sdkddkver.h>
+// The following #defines disable a bunch of unused windows stuff. If you 
+// get weird errors when trying to do some windows stuff, try removing some
+// (or all) of these defines (it will increase build time though).
+#define WIN32_LEAN_AND_MEAN
+#define NOGDICAPMASKS
+#define NOSYSMETRICS
+#define NOMENUS
+#define NOICONS
+#define NOSYSCOMMANDS
+#define NORASTEROPS
+#define OEMRESOURCE
+#define NOATOM
+#define NOCLIPBOARD
+#define NOCOLOR
+#define NOCTLMGR
+#define NODRAWTEXT
+#define NOKERNEL
+#define NONLS
+#define NOMEMMGR
+#define NOMETAFILE
+#define NOMINMAX
+#define NOOPENFILE
+#define NOSCROLL
+#define NOSERVICE
+#define NOSOUND
+#define NOTEXTMETRIC
+#define NOWH
+#define NOCOMM
+#define NOKANJI
+#define NOHELP
+#define NOPROFILER
+#define NODEFERWINDOWPOS
+#define NOMCX
+#define NORPC
+#define NOPROXYSTUB
+#define NOIMAGE
+#define NOTAPE
+
+#define STRICT
+
+#include<Windows.h>
+#include "Window.h"
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
@@ -18,39 +53,8 @@ int CALLBACK WinMain(
 	LPSTR     lpCmdLine,
 	int       nCmdShow)
 {
-	// Register window class
-	const auto pClassName = "Ascalon";
-	WNDCLASSEX wc = { 0 };
-	wc.cbSize = sizeof(wc);
-	wc.style = CS_OWNDC;
-	wc.lpfnWndProc = WndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = hInstance;
-	wc.hIcon = nullptr;
-	wc.hCursor = nullptr;
-	wc.hbrBackground = nullptr;
-	wc.lpszMenuName = nullptr;
-	wc.lpszClassName = pClassName;
-	wc.hIconSm = nullptr;
-	RegisterClassEx(&wc);
-
-	// Instantiate window
-	HWND hWnd = CreateWindowEx(
-		0,
-		pClassName,
-		"Window",
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-		200, 200, 640, 480,
-		nullptr,
-		nullptr,
-		hInstance,
-		nullptr
-	);
-
-	ShowWindow(hWnd, SW_SHOW);
+	Window wnd(800, 300, "Window box");
 	
-	// Message pump
 	MSG msg;
 	BOOL gResult;
 	while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
@@ -61,8 +65,6 @@ int CALLBACK WinMain(
 
 	if (gResult == -1)
 		return -1;
-	else
-		return msg.wParam;
-
-	return 0;
+	
+	return msg.wParam;
 }
