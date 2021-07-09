@@ -156,8 +156,17 @@
   <ItemGroup>
     <ClInclude Include="PawException.h" />
     <ClInclude Include="PawWin.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowsMessageMap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C++ DirectX Engine (Ascalon).rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Desktop\swords_07_b.png" />
+    <Image Include="..\..\..\..\Desktop\swords_09_t.png" />
+    <Image Include="..\..\..\..\Downloads\swords_07_b.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
